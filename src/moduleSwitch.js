@@ -1,29 +1,32 @@
-import React, { Component, PropTypes } from 'react';
-import { Decorator as State } from 'cerebral-react';
-import { _components } from './load';
+// This should move the cerebral-react or cerebral-modules-react
 
-@State({
-  activeModule: ['activeModule']
-})
-export default class ModuleSwitch extends Component {
 
-  static displayName = 'ModuleSwitch';
+// import React, { Component, PropTypes } from 'react';
+// import { Decorator as State } from 'cerebral-react';
+// import { _components } from './load';
 
-  static propTypes = {
-    activeModule: PropTypes.string
-  };
+// @State({
+//   activeModule: ['activeModule']
+// })
+// export default class ModuleSwitch extends Component {
 
-  render() {
-    const {
-      activeModule
-    } = this.props;
+//   static displayName = 'ModuleSwitch';
 
-    const ModuleComponent = _components[activeModule];
+//   static propTypes = {
+//     activeModule: PropTypes.string
+//   };
 
-    return ModuleComponent ? (
-      <ModuleComponent/>
-    ) : (
-      <div>No module component found for {activeModule}</div>
-    );
-  }
-}
+//   render() {
+//     const {
+//       activeModule
+//     } = this.props;
+
+//     const ModuleComponent = _components[activeModule];
+
+//     return ModuleComponent ? (
+//       <ModuleComponent/>
+//     ) : (
+//       <div>No module component found for {activeModule}</div>
+//     );
+//   }
+// }

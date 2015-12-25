@@ -2,7 +2,7 @@
   "name": "cerebral-modules",
   "version": "0.1.0",
   "description": "A library for making modular cerebral apps",
-  "main": "load.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint src test",
     "dev": "parallelshell 'babel src --watch --out-dir lib' 'watch --wait=1 \"eslint src test && mocha --compilers js:babel/register --recursive --reporter dot\" src test'",
@@ -29,23 +29,12 @@
   "devDependencies": {
     "babel": "^5.8.34",
     "babel-eslint": "^4.1.6",
-    "cerebral": "^0.26.1",
-    "cerebral-react": "^0.8.0",
-    "cerebral-router": "^0.8.0",
     "chai": "^3.4.1",
     "eslint": "^1.10.3",
-    "eslint-plugin-react": "^3.13.0",
     "mocha": "^2.3.4",
     "parallelshell": "^2.0.0",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
     "watch": "^0.17.1"
   },
   "dependencies": {},
-  "peerDependencies": {
-    "cerebral-react": "^0.8.0",
-    "cerebral-router": "^0.8.0",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.3"
-  }
+  "peerDependencies": {}
 }
