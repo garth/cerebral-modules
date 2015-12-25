@@ -23,7 +23,7 @@ export default {
 
 From your main.js
 
-'''js
+```js
 // import your cerebral controller
 import controller from './controller';
 
@@ -35,13 +35,13 @@ import notFound from './modules/notFound';
 // init the modules (this will also render the app)
 import loadModules from 'cerebral-react-modules/load';
 loadModules(controller, [ external, home, notFound ]);
-'''
+```
 
 ## Route Signals
 
 In your module routing signals you need to specify which module should be rendered. This can be done using the `setActiveModule` action.
 
-```
+```js
 import setActiveModule from 'cerebral-react-modules/setActiveModule';
 
 controller.signal('home.routed', [
