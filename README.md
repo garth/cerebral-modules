@@ -1,4 +1,4 @@
-# cerebral-react-modules
+# cerebral-modules
 
 Create cerebral modules that can be reused, shared, imported or just simply keep your app tidy.
 

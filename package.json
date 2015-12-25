@@ -1,5 +1,5 @@
 {
-  "name": "cerebral-react-modules",
+  "name": "cerebral-modules",
   "version": "0.1.0",
   "description": "A library for making modular cerebral apps",
   "main": "load.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/garth/cerebral-react-modules.git"
+    "url": "git+https://github.com/garth/cerebral-modules.git"
   },
   "keywords": [
     "cerebral",
@@ -23,9 +23,9 @@
   "author": "Garth Williams",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/garth/cerebral-react-modules/issues"
+    "url": "https://github.com/garth/cerebral-modules/issues"
   },
-  "homepage": "https://github.com/garth/cerebral-react-modules#readme",
+  "homepage": "https://github.com/garth/cerebral-modules#readme",
   "devDependencies": {
     "babel": "^5.8.34",
     "babel-eslint": "^4.1.6",
