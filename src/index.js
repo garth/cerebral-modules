@@ -1,44 +1,62 @@
 const _modules = {};
 
 function setActiveModuleAction(name) {
-
   return function setActiveModule(input, state) {
-    state.set(['activeModule'], name);
+    if (state.get(['activeModule']) !== name) {
+      state.set(['activeModule'], name);
+    }
   };
-
 }
 
 export default function load(controller, modules) {
+  const appChains = {};
 
-  const initChain = [];
+  if (!Array.isArray(modules) || !modules.length) {
+    console.error('No modules loaded');
+  } else {
+    const initChain = [];
 
-  const allChains = modules.reduce((chains, item) => {
+    modules.forEach(mod => {
+      if (!mod.name) {
+        console.error('Cannot load unnamed module', mod);
+      } else if (_modules[mod.name]) {
+        console.error('Module name clash', _modules[mod.name], mod);
+      } else {
 
-    _modules[item.name] = item;
+        // load the module
+        _modules[mod.name] = mod;
+        const chains = typeof mod.init === 'function' ? mod.init(controller) || {} : {};
 
-    // add the module init chain to the modules init chain
-    if (Array.isArray(item.chains.init)) {
-      initChain.push(...item.chains.init);
+        // add the module init chain to the modules init chain
+        if (Array.isArray(chains.init)) {
+          initChain.push(...chains.init);
+        }
+
+        // add the module's external chains
+        if (mod.isService) {
+          appChains[mod.name] = chains;
+        } else {
+          appChains[mod.name] = {};
+          // all non-service modules need an opened chain
+          if (!Array.isArray(chains.opened)) {
+            chains.opened = [];
+          }
+          // non-service modules should be set as active when external chains are run
+          Object.keys(chains).forEach(chain =>
+            appChains[mod.name][chain] = [setActiveModuleAction(mod.name), ...chains[chain]]
+          );
+        }
+      }
+    });
+
+    // if one or more modules had an init chain, execute the module.init signal
+    if (initChain.length) {
+      controller.signal('modules.init', initChain);
+      controller.signals.modules.init();
     }
-
-    // add the modules external chains
-    if (item.isService) {
-      chains[item.name] = item.chains;
-    } else {
-      Object.keys(item.chains).forEach(chain =>
-        chains[item.name][chain] = [setActiveModuleAction(item.name), ...item.chains[chain]]
-      );
-    }
-
-  }, {});
-
-  // if one more modules had an init chain, execute the modules init chains
-  if (initChain.length) {
-    controller.signal('modules.init', initChain);
-    controller.signals.modules.init();
   }
 
-  return allChains;
+  return appChains;
 }
 
 export function _getModules() {

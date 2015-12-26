@@ -16,9 +16,14 @@ A module needs to export the following:
 export default {
   name: 'uniqueModuleName',
   isService: false, //service modules do not affect the activeModule state
-  chains: {
-    init: [] // init chain will be execute on app start
-    // other exposed chains
+  init(controller) {
+    // initialise the module here
+
+    // return signal chains
+    return {
+      init: [] // init chain will be execute on app start
+      // other chains that can be used to setup the routing for the app
+    };
   },
   // optional root component
   Component: ModuleIndexComponent
