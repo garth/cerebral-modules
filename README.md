@@ -2,6 +2,12 @@
 
 Create cerebral modules that can be reused, shared, imported or just simply keep your app tidy.
 
+## Install
+
+```
+npm install cerebral-modules
+```
+
 ## Creating a module
 
 A module needs to export the following:
