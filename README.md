@@ -14,15 +14,18 @@ A module needs to export the following:
 
 ```js
 export default {
-  name: 'uniqueModuleName',
+  name: 'moduleName', // NOT NEEDED ANYMORE
   isService: false, //service modules do not affect the activeModule state
-  init(controller) {
+  init(controller, moduleName) {
     // initialise the module here
 
-    // return signal chains
+    // return signal chains, initial state and optional root Component if it requires init
     return {
-      init: [] // init chain will be execute on app start
-      // other chains that can be used to setup the routing for the app
+      state: {},
+      chains: {
+        init: [] // init chain will be execute on app start
+        // other chains that can be used to setup the routing for the app
+      }
     };
   },
   // optional root component
@@ -40,12 +43,20 @@ import controller from './controller';
 
 // import you app modules
 import external form 'external-node-module';
+import configurable from 'external-configurable-module';
 import home from './modules/home';
 import notFound from './modules/notFound';
 
+const modules = {
+  external,
+  configurable: configurable('dbName'),
+  home,
+  notFound
+}
+
 // init the modules
 import setupModules from 'cerebral-modules';
-const chains = setupModules(controller, [ external, home, notFound ]);
+const chains = setupModules(controller, modules);
 
 // use the chains to setup your routing here
 // chains.moduleName.chainName
