@@ -14,22 +14,21 @@ A module needs to export the following:
 
 ```js
 export default {
-  name: 'moduleName', // NOT NEEDED ANYMORE
-  isService: false, //service modules do not affect the activeModule state
-  init(controller, moduleName) {
+  init(controller, moduleName, modules) {
     // initialise the module here
-
-    // return signal chains, initial state and optional root Component if it requires init
-    return {
-      state: {},
-      chains: {
-        init: [] // init chain will be execute on app start
-        // other chains that can be used to setup the routing for the app
+    // register some signals with controller(moduleName + '.somethingHapenned, [])
+    // extend controller with services, register event listeners, etc
+    // modules attribute is intended for app level modules that configure a modules
+    return { // all parts are optional
+      state: {}, // piece of scoped initial state. would be placed to ['modules', moduleName]
+      init: [], // init chain will be executed on app start
+      extend: {
+        // anything placed here will extend module's properties
       }
     };
   },
-  // optional root component
-  Component: ModuleIndexComponent
+  detach: function (controller, moduleName, modules) {} // cleanup
+  // you can add any app specific fields here (not recommended for external modules)
 }
 ```
 
@@ -45,21 +44,28 @@ import controller from './controller';
 import external form 'external-node-module';
 import configurable from 'external-configurable-module';
 import home from './modules/home';
+import course from './modules/course';
 import notFound from './modules/notFound';
+import moduleSwitcher from './modules/moduleSwitcher';
+import router from './modules/router';
+import app from './modules/app';
 
-const modules = {
+let modules = {
   external,
   configurable: configurable('dbName'),
   home,
-  notFound
+  course,
+  notFound,
+  moduleSwitcher,
+  app,
+  router
 }
 
-// init the modules
 import setupModules from 'cerebral-modules';
-const chains = setupModules(controller, modules);
+setupModules(controller, modules);
 
-// use the chains to setup your routing here
-// chains.moduleName.chainName
+ReactDOM.render(<Container controller={controller} app={modules.app.Component}/>, root);
+
 ```
 
 ## Contribute
